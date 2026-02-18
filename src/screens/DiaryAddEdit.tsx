@@ -114,6 +114,7 @@ function DiaryAddEdit() {
                 }}
                 />
             <TextField
+                fullWidth
                 id="content"
                 label="Content"
                 variant="outlined"
