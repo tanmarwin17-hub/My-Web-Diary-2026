@@ -9,7 +9,7 @@ function Dashboard() {
             <Typography>Dashboard Po alex tangpos</Typography>
             <Typography>number of entry: {sampleDiary.length}</Typography>
             <Typography>Latest enter</Typography>
-            <DiaryEntry entry={sampleDiary[0]} show={true} />
+            <DiaryEntry entry={sampleDiary[0]} id={0} show={true} />
         </>
     )
 }

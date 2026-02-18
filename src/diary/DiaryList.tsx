@@ -1,51 +1,59 @@
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import Paper from "@mui/material/Paper"
+import IconButton from '@mui/material/IconButton'
+import EditIcon from '@mui/icons-material/Edit'
+import Tooltip from '@mui/material/Tooltip'
 import { blue } from "@mui/material/colors"
 import { moodList, sampleDiary, type DiaryEntryType } from "./Diary"
 import { useState } from "react"
+import { useNavigate } from "react-router"
 
 function DiaryList() {
-    const diarylist = sampleDiary
+
+    const diaryList = sampleDiary
 
     return (
-        <Box sx={{ p: 2 }}>
-            {diarylist.map((entry, index) => (
-                <DiaryEntry entry={entry} key={index} />
+        <>
+            {diaryList.map((entry, index) => (
+                <DiaryEntry entry={entry} id={index} key={index} />
             ))}
-        </Box>
+        </>
     )
 }
 
-export function DiaryEntry(prop: { entry: DiaryEntryType, show?: Boolean }) {
-    const { entry, show } = prop
+export function DiaryEntry(prop: { entry: DiaryEntryType, id: number, show?: boolean }) {
+
+    const { entry, id, show } = prop
+
+    const navigate = useNavigate()
+
     const [expand, setExpand] = useState(show)
 
-   
-    const starIcons = "★".repeat(entry.star)
+    function handleEdit(): void {
+        navigate(`/diaryedit/${id}`)
+    }
 
     return (
         <Paper elevation={1} sx={{
             display: 'flex',
             p: 1,
             backgroundColor: blue[100],
-            mb: 1 
         }}>
 
             <Typography sx={{ fontSize: '48px' }}>
                 {moodList[entry.mood].icon}
             </Typography>
-
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'column',
+                flexGrow: 1,
                 pl: 1,
-                flexGrow: 1, 
             }}>
                 <Typography sx={{ textAlign: 'left' }}>
                     {entry.date.toUTCString()}
                 </Typography>
-                <Typography onClick={() => setExpand(!expand)} sx={{ cursor: 'pointer' }}>
+                <Typography onClick={() => setExpand(!expand)} >
                     {entry.title}
                 </Typography>
                 {expand && (
@@ -54,13 +62,9 @@ export function DiaryEntry(prop: { entry: DiaryEntryType, show?: Boolean }) {
                     </Typography>
                 )}
             </Box>
-
-            {
-            }
-            {/* Gradient Star Display */}
-            <Typography sx={{ 
-                fontSize: '24px', 
-                pl: 1, 
+             <Typography sx={{
+                fontSize: '24px',
+                pl: 1,
                 alignSelf: 'flex-start',
                 fontWeight: 'bold',
                 // Gradient Logic:
@@ -70,9 +74,13 @@ export function DiaryEntry(prop: { entry: DiaryEntryType, show?: Boolean }) {
                 // Fallback for older browsers
                 display: 'inline-block'
             }}>
-                {starIcons}
+                {"★".repeat(entry.star)}
             </Typography>
-
+            <Tooltip title="Edit">
+                <IconButton aria-label="edit" onClick={handleEdit}>
+                    <EditIcon />
+                </IconButton>
+            </Tooltip>
         </Paper>
     )
 }

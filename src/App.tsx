@@ -188,7 +188,7 @@ function App() {
           <Route path='/' element={<Dashboard />} />
           <Route path='about' element={<About />} />
           <Route path='diarylist' element={<DiaryItems />} />
-          <Route path='diaryedit' element={<DiaryAddEdit />} />
+          <Route path='diaryedit/:id?' element={<DiaryAddEdit />} />
         </Routes>
      
 
