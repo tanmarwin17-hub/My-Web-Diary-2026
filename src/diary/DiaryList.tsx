@@ -4,10 +4,11 @@ import Paper from "@mui/material/Paper"
 import IconButton from '@mui/material/IconButton'
 import EditIcon from '@mui/icons-material/Edit'
 import Tooltip from '@mui/material/Tooltip'
-import { blue } from "@mui/material/colors"
+import { blue, green } from "@mui/material/colors"
 import { moodList, sampleDiary, type DiaryEntryType } from "./Diary"
 import { useState } from "react"
 import { useNavigate } from "react-router"
+import { useTheme } from "@mui/material/styles"
 
 function DiaryList() {
 
@@ -34,11 +35,15 @@ export function DiaryEntry(prop: { entry: DiaryEntryType, id: number, show?: boo
         navigate(`/diaryedit/${id}`)
     }
 
+    const theme = useTheme()
+
     return (
         <Paper elevation={1} sx={{
             display: 'flex',
             p: 1,
-            backgroundColor: blue[100],
+            m: 1,
+            backgroundColor: green[theme.palette.mode === 'dark' ? 800 : 100],
+
         }}>
 
             <Typography sx={{ fontSize: '48px' }}>
@@ -62,7 +67,7 @@ export function DiaryEntry(prop: { entry: DiaryEntryType, id: number, show?: boo
                     </Typography>
                 )}
             </Box>
-             <Typography sx={{
+            <Typography sx={{
                 fontSize: '24px',
                 pl: 1,
                 alignSelf: 'flex-start',
